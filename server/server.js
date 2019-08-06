@@ -20,7 +20,7 @@ let db = new sqlite3.Database(__dirname + '/data/doctima', (err) => {
 
 
 app.get('/', function(request, response) {
-  response.sendFile(__dirname + '/data.xml');
+  response.sendFile(__dirname + '/client/public/index.html');
 });
 
 app.post('/update', function(request, response) {
