@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xml>
+
+<PersonalData>
+    <name>Daniel Subat</name>
+    <profession>Web Developer</profession>
+    <address>
+        <street>Goethestr. 39</street>
+        <zip>90409</zip>
+        <city>Nürnberg</city>
+        <phone>0911 / 660 29 15</phone>
+        <mobile>0160 / 173 66 96</mobile>
+    </address>
+    <place>Geboren in Dresden</place>
+    <date>am 20.12.1973</date>
+    <marital>ledig</marital>
+</PersonalData>
+<AboutMe>Beständiges Lernen ist meine Leidenschaft. Jedes Projekt ist deswegen eine Gelegenheit, neue Tools und Prozesse zu entdecken, sowie ein besseres Verständnis der Technologie und unserer Beziehung zu ihr zu entwickeln. Code zu schreiben, ist für mich wie Poesie, dabei konzentriere ich mich auf die Mechanik und das Konzept: der erste Schritt zur Lösung eines Problems besteht darin, es zu verstehen.</AboutMe>
+<Skills>
+    <Programming>HTML5, CSS3/SCSS, JavaScript, jQuery, NodeJS, React, ThreeJS, php, SQL</Programming>
+    <Tools>Photoshop, Inkscape</Tools>
+    <Lanugages>German, English</Lanugages>
+</Skills>
+<Online>
+    <portfolio>https://codepen.io/bbx</portfolio>
+    <github>https://github.com/d-subat</github>
+    <homepage>http://andaso.de</homepage>
+</Online>
+<Employment>
+    <company>
+        <name>Siemens AG, Nürnberg</name>
+        <date>1998</date>
+        <job_title>System-Operator</job_title>
+        <description>Erstellung von lnter-/lntranetprojekten, Administration des CompuServe-Forums der Siemens AG</description>
+    </company>
+</Employment>
+<Training />
+<Studies>
+    <university>
+        <name>Friedrich-Alexander-Universität Erlangen</name>
+        <date>1996</date>
+        <subject>Germanistik, Psychologie</subject>
+    </university>
+</Studies>
+<Education>
+    <school>
+        <name>Grundschule Nürnberg-Reichelsdorf</name>
+        <date>1985</date>
+    </school>
+</Education>
+</xml>
