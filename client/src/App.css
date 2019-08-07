@@ -105,12 +105,14 @@ header{
   }
 }
 
+/***************************************************/
+/** mobile turn device
+/***************************************************/
+
 @media screen and (orientation:portrait) {  }
 @media screen and (orientation:landscape) {  }
 
-/***************************************************/
-/** ####### AB HIER SAUBER **/
-/***************************************************/
+
 
 header a{
   text-decoration:none;
