@@ -1,5 +1,5 @@
 
-# CUrriculum App
+# Curriculum App
 
 ## Available Scripts
 
