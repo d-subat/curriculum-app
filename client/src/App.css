@@ -105,12 +105,24 @@ header{
   }
 }
 
+<<<<<<< HEAD
 /************************
 implement mobile turn 
 ***************************/
 @media screen and (orientation:portrait) {  }
 @media screen and (orientation:landscape) {  }
 
+=======
+/***************************************************/
+/** mobile turn device
+/***************************************************/
+
+@media screen and (orientation:portrait) {  }
+@media screen and (orientation:landscape) {  }
+
+
+
+>>>>>>> ef630002353463a772fe3b80eeac045494134552
 header a{
   text-decoration:none;
   color:white;
