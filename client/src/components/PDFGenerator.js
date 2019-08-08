@@ -10,24 +10,8 @@ const PDFGenerator = (props) => {
       <h2 style="color:white;">${ props.Personal_Data.profession}</h2> 
       <h4 style="color:red;text-align:center;"> sdfsdfsdf</h4>`
   };
-  const lookdeep = (object) => {
-    var collection= [], index= 0, next, item;
-    for(item in object){
-        if(object.hasOwnProperty(item)){
-            next= object[item];
-            if(typeof next== 'object' && next!= null){
-                collection[index++]= item +
-                ':{ '+ lookdeep(next).join(', ')+'}';
-            }
-            else collection[index++]= [String(next)+'<br>'];
-        }
-    }
-    return collection;
-}
-console.log(renderData(props.data));
   const doc = new jsPDF()
   
-
   doc.setFillColor(185,185,185);
   doc.rect(165, 0, 50, 1024, 'F'); 
 

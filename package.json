@@ -22,9 +22,10 @@
   "homepage": "https://github.com/d-subat/doctima#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
-    "concurrently": "^4.0.1",
+    
     "cors": "^2.8.5",
     "express": "^4.16.4",
-    "sqlite3": "^4.0.9"
+    "sqlite3": "^4.0.9",
+    "concurrently": "^4.0.1"
   }
 }

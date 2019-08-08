@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
  
 import { isObject } from "util";
 import SvgIcon from "./SvgIcon";
-
+import Loading from './Loading';
 const Home = props => {
  
   const renderData = serverData => {
@@ -63,17 +63,17 @@ const Home = props => {
           <SvgIcon name="image" />
           <input
             type="file"
-            onChange={props.getProfileImage}
+            onChange={props.saveProfileImage}
             id="file"
             accept="image/*"
           />
         </label>
-        <div className="profileName">Daniel Subat</div>
+        <div className="profileName">{Object.keys(props.data).length > 0 ? props.data["Persönliche Daten"].name : ""}</div>
         <img src={props.profileImg} alt="profile pic"/>   
       </div>
-
-      {renderData(props.data)}
-
+      {Object.keys(props.data).length > 0 ? 
+        renderData(props.data) : <Loading /> }
+      
       <NavLink className="btn notify" to="/signature">
         Unterschrift
       </NavLink>

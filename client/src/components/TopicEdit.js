@@ -19,7 +19,7 @@ const TopicEdit = ( props) => {
         data: JSON.stringify(data[props.match.params.id]),
         column: props.match.params.id
     });
-      props.setUpdate(true);
+      props.setUpdate(!props.updateStatus);
       toggleStatus(true);
       setPostData(result.data);
     }
@@ -34,11 +34,16 @@ const TopicEdit = ( props) => {
       ...form,
       [fieldName]: e.target.value
     });
-    if ( isObject(Object.values(props.data[props.match.params.id])[0])) {      
+    console.log("---------",fieldName, e.target.value)
+
+    if ( isObject(Object.values(props.data[props.match.params.id])[0]) ) {      
       newData[props.match.params.id][Object.keys(newData[props.match.params.id])[level]][fieldName] = e.target.value;    
-    } else {
-    newData[props.match.params.id][fieldName] = e.target.value;    
+    } else if (props.match.params.id === fieldName) {
+    newData[props.match.params.id] = e.target.value;    
     }
+    else {
+      newData[props.match.params.id][fieldName] = e.target.value;    
+      }
     setData(newData);
   };
 
@@ -62,14 +67,15 @@ const addNewTopicItem = async (e) => {
 }
 
 
-  const parseJSON = (jsonObject, test) => {
+  const parseJSON = (jsonObject, paramsID) => {
     const renderHTML = (type, label, content) => {
       switch (type) {
         case "area":
           return (
             <div>
-              <textarea name={label} value={content} />
-              <label htmlFor={test}> {label}</label>
+              <textarea name={label} defaultValue={content}
+                value={form[label]}  onChange={handleChange} />
+              <label htmlFor={paramsID}> {label}</label>
             </div>
           );
         default:            
@@ -79,7 +85,7 @@ const addNewTopicItem = async (e) => {
                 onChange={handleChange}
                 type="text"
                 name={label}
-                key={content}
+                key={isObject(Object.values(props.data[props.match.params.id])[0]) ? content : ""}
                 defaultValue={content}
                 value={form[label]} />
               <label htmlFor={label}> {label}</label>
@@ -89,7 +95,8 @@ const addNewTopicItem = async (e) => {
     };
     
     if (isObject(props.data[props.match.params.id][Object.keys(props.data[props.match.params.id])[level]])) {
-      return (
+      
+      return (        
         <div className="field">
           {Object.keys(props.data[props.match.params.id][Object.keys(props.data[props.match.params.id])[level]]).map((item, i) => {
                 return  (     
@@ -102,12 +109,14 @@ const addNewTopicItem = async (e) => {
         <div className="field">
           {jsonObject && typeof jsonObject === "string"
             ? jsonObject.length >= 30
-              ? renderHTML("area", test, jsonObject)
-              : renderHTML("input", test, jsonObject)
-            : Object.keys(jsonObject).map((item, i) => {
+              ? renderHTML("area", paramsID, jsonObject)
+              : renderHTML("input", paramsID, jsonObject)
+            :   Object.keys(jsonObject).map((item, i) => {
               return (
                 <>
-                  {renderHTML("input", item, jsonObject[item])}
+                  {isObject(jsonObject[item]) ? (
+                    parseJSON(jsonObject[item])
+                  ) : renderHTML("input", item, jsonObject[item])}
                 </>
               );
             })}
@@ -125,8 +134,8 @@ const addNewTopicItem = async (e) => {
       setLevel(level-1) }
   }
  
-  const renderTopicData = (data, test) => {
-     return parseJSON(data, test);
+  const renderTopicData = (data, paramsID) => {
+     return parseJSON(data, paramsID);
   };
  
   if (props.data.length < 1) {
@@ -147,7 +156,7 @@ const addNewTopicItem = async (e) => {
         <button onClick={() => controlPages("down")} className="btn notify">&lt;</button>      
         <button onClick={() => controlPages("up")} className="btn notify">&gt;</button>
         <button onClick={() => alert("not yet implemented")} className="btn notify">remove</button>
-        <button onClick={() => addNewTopicItem()} className="btn notify">add</button>
+      <button onClick={() => alert("not yet implemented") /*'() => addNewTopicItem()*/} className="btn notify">add</button>
         
       </div>
       }
@@ -155,7 +164,7 @@ const addNewTopicItem = async (e) => {
       <h1>{props.match.params.id}</h1>
   
       {renderTopicData(data[props.match.params.id] , props.match.params.id)}
-      <button onClick={ () => updateData(data)}>Save</button>
+      <button className="btn notify" onClick={ () => updateData(data)}>Save</button>
     </div>
     </>
   );

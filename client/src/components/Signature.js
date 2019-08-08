@@ -49,7 +49,7 @@ class Signature extends Component {
               column: "signature"
           }
             );
-            this.props.setUpdate(true);
+            this.props.setUpdate(!this.props.updateStatus);
             this.setState ( {showStatus: true, 
               serverPostData: result.data} );
           }

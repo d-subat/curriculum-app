@@ -2,6 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "config-overrides-path": "node_modules/react-app-rewire-disable-chunks",
   "dependencies": {
     "axios": "^0.19.0",
     "jspdf": "^1.5.3",
@@ -10,11 +11,12 @@
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
-    "recompose": "^0.30.0"
+    "recompose": "^0.30.0",
+    "rewire": "^4.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build",    
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -33,5 +35,9 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://192.168.178.20:4000"
+  "proxy": "http://192.168.178.20:4000",
+  "devDependencies": {
+    "react-app-rewire-disable-chunks": "^0.0.1",
+    "react-app-rewired": "^2.1.3"
+  }
 }

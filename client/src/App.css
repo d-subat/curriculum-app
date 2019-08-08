@@ -5,7 +5,7 @@ html,body {
 }
 
 .btn {
-  border: none;
+  border: 0.25em solid #36a;
   outline: none;
   color:white;
   line-height:2em;
@@ -56,7 +56,7 @@ header{
 .profile > img {
   height:12em;
   width:100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .profile label.file {
@@ -105,12 +105,11 @@ header{
   }
 }
 
+/************************
+implement mobile turn 
+***************************/
 @media screen and (orientation:portrait) {  }
 @media screen and (orientation:landscape) {  }
-
-/***************************************************/
-/** ####### AB HIER SAUBER **/
-/***************************************************/
 
 header a{
   text-decoration:none;
@@ -148,14 +147,14 @@ summary::-webkit-details-marker { display: none; }
 
 details[open] summary:before {
   
-  content: "\2B9F";
+  content: "-";
   color: white;
   border:2px solid white;
   
   margin-right: 5px;
 }
 details summary:before  {
-  content: "\2B9E";
+  content: "+";
   border:2px solid dodgerblue;
   border-radius: 50%;
   width:1.5em;
