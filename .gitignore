@@ -12,6 +12,7 @@ git push# See https://help.github.com/articles/ignoring-files/ for more about ig
 /client/build
 
 /server/data.js
+/server/data/doctima
 
 # misc
 .DS_Store
