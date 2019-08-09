@@ -44,7 +44,7 @@ class Signature extends Component {
       saveSignature = () => {
           const data = this.canvas.toDataURL("image/png")
           const fetchData = async () => {
-            const result = await axios.post("http://localhost:4000/update", {
+            const result = await axios.post("http://localhost:4000/api/update", {
               data: '"' + data + '"',
               column: "signature"
           }

@@ -1,33 +1,28 @@
-import React, { Component } from 'react';
-import { Route, Redirect } from 'react-router-dom'
-import { UserContext } from '../App'
 
-const PrivateRoute = ({ component: ComposedComponent, ...rest }) => {
+import React, { useEffect } from "react";
+import { Route } from "react-router-dom";
+import { useAuth0 } from "../auth0";
 
-  class Authentication extends Component {
+const PrivateRoute = ({ component: Component, path, ...rest }) => {
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
 
-    handleRender = props => {
-      if (!this.props.user) {
-        return <Redirect to="/login" />
-      } else {
-        return <ComposedComponent user={this.props.user} {...props} />
+  useEffect(() => {
+    const fn = async () => {
+      if (!isAuthenticated) {
+        await loginWithRedirect({
+          appState: { targetUrl: path }
+        });
       }
-    }
+    };
+    fn();
+  }, [isAuthenticated, loginWithRedirect, path]);
 
-    render() {
-      return (
-        <Route {...rest} render={this.handleRender} />
-      );
-    }
-  }
+  const render = props =>
+    isAuthenticated === true ? <Component {...props} /> : null;
 
-  return (
-    <UserContext.Consumer>
-      {
-        ({ user }) => <Authentication user={user} />
-      }
-    </UserContext.Consumer>
-  )
+  return <Route path={path} render={render} {...rest} />;
 };
 
-export default PrivateRoute
+ 
+
+export default PrivateRoute;

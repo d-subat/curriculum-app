@@ -15,7 +15,7 @@ const TopicEdit = ( props) => {
   
   const updateData = () => {  
     async function fetchData() {
-      const result = await axios.post("http://localhost:4000/update", {
+      const result = await axios.post("http://localhost:4000/api/update", {
         data: JSON.stringify(data[props.match.params.id]),
         column: props.match.params.id
     });

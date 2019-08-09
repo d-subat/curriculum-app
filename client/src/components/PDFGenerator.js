@@ -6,8 +6,8 @@ import jsPDF from 'jspdf';
 const PDFGenerator = (props) => {
   const renderData = props => {
       return `
-      <h1 style="color:white;">${ props.Personal_Data.name}</h1> 
-      <h2 style="color:white;">${ props.Personal_Data.profession}</h2> 
+      <h1 style="color:white;">${ props["Persönliche Daten"].name}</h1> 
+      <h2 style="color:white;">${ props["Persönliche Daten"].profession}</h2> 
       <h4 style="color:red;text-align:center;"> sdfsdfsdf</h4>`
   };
   const doc = new jsPDF()

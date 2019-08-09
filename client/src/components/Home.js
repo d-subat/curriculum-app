@@ -13,7 +13,7 @@ const Home = props => {
           <details key={index}>
             <summary>
               <div>{item} </div>
-              <NavLink   to= {`/Daniel Subat/${item}`}>
+              <NavLink   to= {`/${serverData["Persönliche Daten"].name}/${item}`}>
                 <SvgIcon name="edit" />
               </NavLink>
             </summary>

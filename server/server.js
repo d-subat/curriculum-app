@@ -22,7 +22,12 @@ app.get('/', function (request, response) {
   response.sendFile(__dirname + '/client/build/index.html');
 });
 
-app.post('/update', function (request, response) {
+
+
+/* API Calls */
+
+
+app.post('/api/update', function (request, response) {
   var data = request.body.data;
   var column = request.body.column;
   db.run("UPDATE curriculum SET '" + column + "' = ? WHERE uuid = ?", data, 1), (err) => {
@@ -34,7 +39,8 @@ app.post('/update', function (request, response) {
   response.status(200).send("Updated sucessfully");
 });
 
-app.get('/curriculum', function (request, response) {
+
+app.get('/api/curriculum', function (request, response) {
 
   db.each('SELECT * FROM curriculum', function (err, row) {
     response.send(JSON.parse('{' +
@@ -54,6 +60,20 @@ app.get('/curriculum', function (request, response) {
   });
 });
 
+
+app.get('/api/users', function  (request, response) {
+  const params = request.usermail || "0x2012@gmail.com";
+  db.all('SELECT * FROM users WHERE usermail= ? ', params, (err, rows) => {
+    if (err) {
+      res.status(400).json({"error":err.message});
+      return;
+    }
+    response.json({
+        "data":rows
+    })
+  });
+
+});
 
 var listener = app.listen(process.env.PORT || 4000, function () {
   console.log('Your app is listening on port ' + listener.address().port);

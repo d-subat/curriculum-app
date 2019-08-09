@@ -1,10 +1,10 @@
 import React, {useState,useEffect} from "react";
-import { BrowserRouter as Router, Route, Switch,Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import Auth from "./components/auth/auth";
+
 import Login from "./components/Login";
+import Loading from "./components/Loading";
 
-import PrivateRoute from './components/PrivateRoute'
 import Header from "./components/Header";
 import Home from ".//components/Home";
 import TopicEdit from ".//components/TopicEdit";
@@ -16,7 +16,7 @@ import axios from "axios";
 
 import "./App.css";
 
-export const UserContext = React.createContext();
+
 
 function App() {
 
@@ -24,13 +24,13 @@ function App() {
   const [signatureImage, setSignatureImage] = useState([]);
   const [profileImage, setProfileImage] = useState([]);
   const [updateStatus, setUpdate] = useState(false);
-  const [AuthUser, setAuthUser] = useState(false);
   
+
 
   useEffect(() => {
     console.log(updateStatus);
     async function fetchData() {
-      const result = await axios.get("/curriculum");
+      const result = await axios.get("/api/curriculum");
       
       setData(result.data.data);
       setSignatureImage(result.data.signature);
@@ -39,8 +39,8 @@ function App() {
     }
     fetchData();
   }, [updateStatus]);
-  
-  
+    
+   
   const saveProfileImage = (e) => {
     const saveCanvas = document.createElement("canvas");    
     const context = saveCanvas.getContext('2d');
@@ -55,7 +55,7 @@ function App() {
     
 
     const fetchData = async () => {
-      const result = await axios.post("http://localhost:4000/update", {
+      const result = await axios.post("/api/update", {
         data: '"' + data + '"',
         column: "profileImage"
         });
@@ -69,16 +69,14 @@ function App() {
     <Router>
       <Header  profileName={Object.keys(serverData).length > 0 ? `${serverData["Persönliche Daten"].name}` : ""} />
       <main>
-      <UserContext.Provider value={AuthUser}>
         <Switch>
-        <PrivateRoute  path="/" exact={true} render={() => <Home  data={serverData} signature={signatureImage}  saveProfileImage={saveProfileImage}   profileImg={profileImage} /> } />  
-        <PrivateRoute  path="/signature" render={() => <Signature updateStatus={updateStatus} setUpdate={setUpdate} signature={signatureImage} /> } />  
-        <PrivateRoute  path="/pdfgenerator" render={() => <PDFGenerator signature={signatureImage}  profileImg={profileImage} data={serverData} /> } />  
-        <PrivateRoute  path={Object.keys(serverData).length > 0 ? `/${serverData["Persönliche Daten"].name}/:id` : ""} render={({match}) => <TopicEdit  updateStatus={updateStatus} setUpdate={setUpdate} match={match} data={serverData} /> } />  
-          <Route path="/login"  render={() => <Login  user={this.props.user} />}/>
+          <Route  path="/" exact={true} render={() => <Home  data={serverData} signature={signatureImage}  saveProfileImage={saveProfileImage}   profileImg={profileImage} /> } />  
+          <Route  path="/signature" render={() => <Signature updateStatus={updateStatus} setUpdate={setUpdate} signature={signatureImage} /> } />  
+          <Route  path="/pdfgenerator" render={() => <PDFGenerator signature={signatureImage}  profileImg={profileImage} data={serverData} /> } />  
+          <Route  path={Object.keys(serverData).length > 0 ? `/${serverData["Persönliche Daten"].name}/:id` : ""} render={({match}) => <TopicEdit  updateStatus={updateStatus} setUpdate={setUpdate} match={match} data={serverData} /> } />  
+          <Route path="/login"  render={() =>   <Login />} />      
           <Route component={NotFound} />
         </Switch>
-        </UserContext.Provider>
       </main>
     </Router>
   );

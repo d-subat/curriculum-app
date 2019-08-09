@@ -1,19 +1,25 @@
-import React , {useState} from 'react';
-import Auth  from './auth/auth';
-import { withRouter,Redirect } from "react-router-dom";
+import React, { Component } from "react";
 
+import {AuthLogin} from "./auth/auth";
 
-const Login = (props) =>  {
+const Login = () => {
+  const { isAuthenticated, loginWithRedirect, logout } = AuthLogin();
 
- 
+  return (
+    <div>
+      {!isAuthenticated && (
+        <button
+          onClick={() =>
+            loginWithRedirect({})
+          }
+        >
+          Log in
+        </button>
+      )}
 
-      return (
-        <div>
-          <p>You must log in to view the page </p>
-          <button >Log in</button>
-        </div>
-      );
-    
-  }
+      {isAuthenticated && <button onClick={() => logout()}>Log out</button>}
+    </div>
+  );
+};
 
-  export default withRouter(Login);
+export default Login;
