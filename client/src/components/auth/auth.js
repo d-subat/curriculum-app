@@ -1,7 +1,6 @@
 class auth {
     login = () => {
-    const TextDecoderStream = "";
-return {TextDecoderStream};
+ 
 }
 }
 const Auth = new auth();

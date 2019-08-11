@@ -4,7 +4,7 @@
   "description": "doctima React Example app + backend",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"node -r ./index.js\" \"cd client && yarn start\"",
+    "start": "concurrently \"node -r dotenv/config ./index.js\" \"cd client && yarn start\"",
     "dev": ""
   },
   "repository": {
@@ -22,10 +22,16 @@
   "homepage": "https://github.com/d-subat/doctima#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
-    
+    "concurrently": "^4.0.1",
+    "connect-sqlite3": "^0.9.11",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^8.0.0",
     "express": "^4.16.4",
-    "sqlite3": "^4.0.9",
-    "concurrently": "^4.0.1"
+    "express-session": "^1.16.2",
+    "helmet": "^3.20.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "sqlite3": "^4.0.9"
   }
 }

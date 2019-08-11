@@ -1,0 +1,531 @@
+$custom-easing: cubic-bezier(1, .1, 0, 0.9);
+$test: 100%;
+$primary-color: dodgerblue;
+
+:root {
+  --primary: #{$primary-color};
+  --profilePlaceHolder: url(/user.png) no-repeat center;
+}
+
+
+html,
+body {
+  font-size: 16px;
+  margin: 0;
+  height: 100%;
+}
+
+.btn {
+  border: none;
+  outline: none;
+  color: white;
+  line-height: 2em;
+  font-size: 1em;
+  text-align: center;
+  padding: .5em 1em;
+  text-decoration: none;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  box-shadow: inset 0 0 0 2px var(--primary), inset 0 0 0 6px white;
+  display: flex;
+  align-items: center;
+}
+
+.btn.notify {
+  background: var(--primary);
+}
+
+.btn.confirm {
+  background: #5cb85c;
+  box-shadow: inset 0 0 0 2px #5cb85c, inset 0 0 0 6px white
+}
+
+.btn.danger {
+  background: orange;
+  box-shadow: inset 0 0 0 2px orange, inset 0 0 0 6px white
+}
+
+.btn.Google {
+  flex: 1;
+  background: #cb3f22;
+}
+
+.btn.Google:hover {
+  background: #a5331c;
+}
+
+.btn.Facebook {
+  flex: 1;
+  background: #3b5998;
+}
+
+.btn.Facebook:hover {
+  background: #293e69
+}
+
+.btn.Mail {
+  flex: 1;
+  background: #bbb;
+}
+
+.btn.Mail:hover {
+  background: #999;
+}
+
+.icon-svg {
+  width: 1.5em;
+  height: 1.5em;
+  fill: white;
+}
+
+.btn .icon-svg {
+  margin-right: 0.5em;
+}
+
+#root {
+  height: 100%;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+
+  height: calc(100% - 4em);
+}
+
+header {
+  background: var(--primary);
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1em 0 1em
+}
+
+.profile {
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 15em;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.profile>img {
+  object-fit: cover;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  width: 100%;
+  height: 15em;
+  z-index: -1;
+}
+
+.profile label {
+  width: 2.5em;
+  height: 2.5em;
+  border-radius: 50%;
+  background: white;
+  display: grid;
+  place-content: center;
+
+}
+
+.profile .icon-svg {
+  fill: var(--primary);
+  margin: 0 0 0.1em 0;
+}
+
+
+.profile label.file {
+  fill: var(--primary);
+
+  margin: 0 .5em .5em 0;
+  align-self: flex-end;
+  cursor: pointer;
+}
+
+.profile .profileName {
+  color: white;
+  mix-blend-mode: hard-light;
+
+  text-shadow: 0 0 2px black;
+  align-self: center;
+  font-weight: 800;
+  font-size: 3em;
+  letter-spacing: 1px;
+  width: 100%;
+  text-align: Center;
+
+}
+
+.profile input[type="file"],
+.navMenu input[type="color"] {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+}
+
+
+.status {
+  padding: 0 0 0 2em;
+
+  line-height: 0;
+  background: rgb(191, 221, 250);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  animation: slideIn 0.5s ease-in-out forwards;
+  opacity: 0;
+  cursor: pointer;
+}
+
+@keyframes slideIn {
+  to {
+    padding: 1em 2em 1em 2em;
+    line-height: 1;
+    opacity: 1;
+  }
+}
+
+.navMenu,
+.navMenu label {
+  color: white;
+  cursor: pointer;
+}
+
+
+
+header a {
+  text-decoration: none;
+  color: white;
+  text-transform: capitalize;
+  padding: 1em 0 1em 0;
+}
+
+.topic {
+  display: flex;
+  flex-direction: column;
+  margin: 2em;
+}
+
+summary {
+  padding: 1em;
+  color: var(--primary);
+  box-shadow: 0 -2px 0 0 var(--primary);
+  display: flex;
+  justify-content: space-between;
+
+}
+
+summary>a.btn {
+  display: inline;
+}
+
+details[open] summary {
+  padding: 1em;
+  color: white;
+  background: var(--primary);
+  box-shadow: 0 -2px 0 0 var(--primary);
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+details[open] summary:before {
+
+  content: ">";
+
+  transform: rotate(90deg);
+  background-size: 16px 10px;
+  border: 2px solid white;
+
+}
+
+details summary:before {
+  content: ">";
+
+  background-size: 16px 10px;
+  transform: rotate(0deg);
+  border: 2px solid var(--primary);
+  border-radius: 50%;
+  width: 1.5em;
+  height: 1.5em;
+  display: flex;
+  place-content: center;
+  margin-right: 5px;
+  font-weight: 800;
+  transition: all 0.5s ease-in;
+}
+
+details {
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+summary {
+  margin-bottom: 0px;
+  transition: all 600ms cubic-bezier(0.23, 1, 0.32, 1);
+  align-items: center;
+}
+
+details:last-of-type {
+  box-shadow: 0 2px 0 0px var(--primary);
+}
+
+details[open] summary {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+}
+
+details .field .Company,
+details .field .Title,
+,
+details .field .Name {
+  font-weight: bold;
+  ;
+}
+
+details .field .Description,
+details .field .Date {
+  flex: 1;
+  margin-bottom: 2em;
+}
+
+.field .field .Description {
+  flex: 1;
+  margin-bottom: 4em;
+}
+
+details .field {
+  display: flex;
+  margin: 1em;
+  transition: 0.25s ease-in-out;
+  transform: rotateX(-90deg);
+  transform-origin: right top;
+  opacity: 0;
+
+}
+
+details[open] .field {
+  transform: rotateX(0deg);
+  opacity: 1;
+
+}
+
+details .field label {
+  color: var(--primary);
+  font-variant: small-caps;
+  width: 7em;
+}
+
+details>a.btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0.25em;
+
+}
+
+.topic .field>div {
+  margin-bottom: 2em;
+  position: relative
+}
+
+.field>div>label {
+  position: absolute;
+  top: -1.75em;
+  left: 0;
+  padding: 0 0.5em 0 0.5em;
+  line-height: 2em;
+
+  color: var(--primary);
+  transition: all 0.5s ease-in-out;
+}
+
+.field>div>input,
+.field>div>textarea {
+  width: 100%;
+
+
+  border: none;
+  font-size: 1em;
+
+  transition: all 0.5s ease-in-out;
+  line-height: 2em;
+}
+
+.field>div>textarea {
+  border: 2px solid var(--primary);
+  line-height: 1.5em;
+  height: 8em;
+  padding: 0.5em;
+}
+
+.field .btn {
+  margin-right: 0.5em;
+}
+
+
+
+
+.row {
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 2px var(--primary);
+  background: #f7f7f7;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  width: calc(100% - 3em);
+
+  text-align: center;
+  text-indent: 6em;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  border-radius: 3px;
+  transition: all 0.3s $custom-easing;
+}
+
+
+input[type="text"]+label,
+input[type="password"]+label,
+input[type="email"]+label {
+  height: 40px;
+  line-height: 40px;
+  font-size: 12px;
+  font-weight: bold;
+  width: 80px;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: .05em;
+  box-shadow: inset 0 0 0 2px var(--primary);
+  color: var(--primary);
+  background: white;
+  border-radius: 3px 0 0 3px;
+  transition: all .35s $custom-easing;
+
+  top: 0;
+  left: 0;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+  background: white;
+
+}
+
+
+input[type="text"]::placeholder,
+input[type="password"]::placeholder,
+input[type="email"]::placeholder {
+  color: #669;
+}
+
+input[type="text"]:focus::placeholder,
+input[type="password"]:focus::placeholder,
+input[type="email"]:focus::placeholder {
+
+  color: #f7f7f7;
+}
+
+input[type="text"]:focus~label,
+input[type="password"]:focus~label,
+input[type="email"]:focus~label {
+
+  box-shadow: inset 0 0 0 2px var(--primary);
+  color: white;
+  background: var(--primary);
+
+}
+
+input[type="text"]~svg,
+input[type="password"]~svg,
+input[type="email"]~svg {
+  fill: #f7f7f7;
+
+  padding: 0 5px 0 5px;
+  transform: rotate(45deg);
+  transition: all 0.3s $custom-easing;
+
+  transform: translateX(2em);
+
+}
+
+input[type="text"]:focus~svg,
+input[type="password"]:focus~svg,
+input[type="email"]:focus~svg {
+  fill: var(--primary);
+
+  transform: translateX(0em);
+
+}
+
+
+
+.row svg {
+
+  top: 0;
+  bottom: 0;
+  right: 0;
+  height: 40px;
+  line-height: 40px;
+  width: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+details .icon-svg,
+label .icon-svg {
+
+  width: 1.5em;
+  height: 1.5em;
+}
+
+
+
+
+
+
+.signatureControls {
+  position: absolute;
+  left: 0;
+  bottom: 0.5em;
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+canvas {
+  background: #ccc;
+  bottom: 0;
+  border: 1px solid blue;
+  cursor: pointer;
+}
+
+/************************
+implement mobile turn 
+***************************/
+@media screen and (orientation:portrait) {}
+
+@media screen and (orientation:landscape) {}
+
+@media screen and (max-width:28em) {
+  .topic .field>div {
+    margin-bottom: 1em;
+  }
+}
