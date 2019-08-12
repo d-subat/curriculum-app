@@ -89,7 +89,6 @@ passport.use(new LocalStrategy(
     }));
 
 passport.serializeUser(function(user, done) {
-  console.log(user)
   return done(null, user.uuid); //this is the 'user' property saved in req.session.passport.user
 });
 
@@ -151,20 +150,14 @@ app.post('/register', function(req, res, next) {
       
     }
   });
-/*
-    db.run("UPDATE users SET '" + column + "' = ? WHERE uuid = ?", data, 1), (err) => {
-      if (err) {
-        console.error(err.message);
-      } else {
-        console.log("UPDATE curriculum SET '" + column + "' = '" + data + "' LIMIT 1"); }
-    };  
-    */
+
+  
   next();
 });
 
 
-app.get('/json/login/success', function(req, res) {
-    console.log('/login/success');
+app.get('/json/login/success',isAuthenticated, function(req, res) {
+    console.log('/login/success',req.session);
     res.status(200).json({user: req.session.passport.user});
 });
 

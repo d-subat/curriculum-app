@@ -1,8 +1,8 @@
 import React, {useState,useEffect} from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-
-import Logins from "./components/Login";
+import Auth,{withAuth} from "./components/auth/auth"
+import Login from "./components/Login";
 import Loading from "./components/Loading";
 
 import Header from "./components/Header";
@@ -18,13 +18,13 @@ import "./App.scss";
 
 
 
-function App() {
+function App(props) {
 
   const [serverData, setData] = useState([]);
   const [signatureImage, setSignatureImage] = useState([]);
   const [profileImage, setProfileImage] = useState([]);
   const [updateStatus, setUpdate] = useState(false);
-  
+  const [isAuth,setAuth]  = useState(props.isAuth);
 
 
   useEffect(() => {
@@ -69,7 +69,10 @@ function App() {
 
 
   return (
+    
     <Router>
+    {isAuth?
+    <>
       <Header  profileName={Object.keys(serverData).length > 0 ? `${serverData["Persönliche Daten"].name}` : ""} />
       <main>
         <Switch>
@@ -77,15 +80,18 @@ function App() {
           <Route  path="/signature" render={() => <Signature updateStatus={updateStatus} setUpdate={setUpdate} signature={signatureImage} /> } />  
           <Route  path="/pdfgenerator" render={() => <PDFGenerator signature={signatureImage}  profileImg={profileImage} data={serverData} /> } />  
           
-          <Route path="/login" exact={true}  render={() =>   <Logins />} />      
+          <Route path="/login" exact={true}  render={() =>   <Login />} />      
           <Route  path="/CV/:id"   render={({match}) => <TopicEdit  updateStatus={updateStatus} setUpdate={setUpdate} match={match} data={serverData} /> } />            
           
           <Route  component={NotFound}/>
         </Switch>
         
       </main>
+     </> :
+      <Route path="/" exact={true}  render={() =>   <Login />} />      
+    }
     </Router>
   );
 }
 
-export default App;
+export default withAuth(App);
