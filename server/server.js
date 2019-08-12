@@ -10,11 +10,13 @@ const SQLiteStore = require('connect-sqlite3')(session);
 
 const app = express();
 app.use(helmet());
-app.use(passport.initialize());
+
 app.use(cors())
 app.options('*', cors())
 app.use(express.json({  limit: '50mb'}));
 app.use(express.urlencoded({  limit: '50mb',extended:true}));
+
+
 
 let db = new sqlite3.Database(__dirname + '/data/doctima', (err) => {
   if (err) {
@@ -27,7 +29,7 @@ let db = new sqlite3.Database(__dirname + '/data/doctima', (err) => {
 const expiryDate = new Date( Date.now() + 60 * 60 * 1000 ); // 1 hour
 app.use(session({
   name: 'session',
-  store: new SQLiteStore(), //{dir:__dirname + '/data/' , db:'doctima', table:'sessions'}),
+  store: new SQLiteStore({dir:__dirname + '/data/' , db:'doctima', table:'sessions'}),
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
@@ -42,6 +44,9 @@ app.use(session({
           }
   })
 );
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 function hashPassword(password, salt) {
   var hash = crypto.createHash('sha256');
@@ -71,7 +76,7 @@ passport.use(new LocalStrategy(
         console.log("---",hash)
     
         db.get('SELECT username, uuid FROM users WHERE username = ? AND userpass = ?', username, hash, function(err, row) {
-          console.log("---",row)
+       
      
           if(err) {
             console.error( err.stack);
@@ -85,18 +90,25 @@ passport.use(new LocalStrategy(
 
 passport.serializeUser(function(user, done) {
   console.log(user)
- 
   return done(null, user.uuid); //this is the 'user' property saved in req.session.passport.user
 });
 
 passport.deserializeUser(function(id, done) {
-  db.get('SELECT id, username FROM users WHERE id = ?', id, function(err, row) {
+  db.get('SELECT uuid, username FROM users WHERE uuid = ?', id, function(err, row) {
     if (!row) return done(null, false);
     return done(null, row);
   });
 });
 
-
+const isAuthenticated = (req,res,next) => {
+  console.log(req.session)
+  if(req.isAuthenticated())
+     return next();
+  else
+     return res.status(401).json({
+       error: 'User not authenticated'
+     })
+}
 /*
 app.get('/', function (request, response) {
   response.sendFile(__dirname + '/client/build/index.html');
@@ -162,7 +174,7 @@ app.get('/json/login/failure', function(req, res) {
 });
 
 
-app.post('/api/update', function (request, response) {
+app.post('/api/update', isAuthenticated,function (request, response) {
   var data = request.body.data;
   var column = request.body.column;
   db.run("UPDATE curriculum SET '" + column + "' = ? WHERE uuid = ?", data, 1), (err) => {
@@ -175,8 +187,7 @@ app.post('/api/update', function (request, response) {
 });
 
 
-app.get('/api/curriculum', function (request, response) {
-
+app.get('/api/curriculum',isAuthenticated, function (request, response) {
   db.each('SELECT * FROM curriculum', function (err, row) {
     response.send(JSON.parse('{' +
         '"signature": ' + row.signature +
@@ -196,7 +207,7 @@ app.get('/api/curriculum', function (request, response) {
 });
 
 
-app.get('/api/users', function  (request, response) {
+app.get('/api/users',isAuthenticated, function  (request, response) {
   const params = request.usermail || "0x2012@gmail.com";
   db.all('SELECT * FROM users WHERE usermail= ? ', params, (err, rows) => {
     if (err) {
