@@ -14,7 +14,7 @@ const Login = () => {
       [fieldName]: e.target.value
     });
   };
-  const submitEMail = (e, type) => {
+  const submitSignIn = (e, type) => {
     e.preventDefault();
     console.log(form);
     const url = type === "login" ? "/login" : "/register";
@@ -33,27 +33,26 @@ const Login = () => {
     fetchData();
   };
   return (
-    <div className="topic">
+    <div className="topic" style={{flexDirection:"row"}}>
+          <div className={signEmail? "sliderTab open": "sliderTab closed"}>
       <h1>Anmelden</h1>
-      <div class="field">
-        <div className="fieldrow">
+              
           <SignIn type="Google" />
           <SignIn type="Facebook" />
+          <div className="field">
           <button
-            className={"btn Mail"}
-            onClick={() => toggleEmail(!signEmail)}
-          >
+            className={"btn Mail social"}
+            onClick={() => toggleEmail(!signEmail)}>
             <SvgIcon name="Mail" /> Anmelden mit Email
           </button>
-        </div>
-        <button onClick={() => toggleRegistration(!signRegistration)}>
-          Noch keinen Account?{" "}
-        </button>
+        
+      </div>
       </div>
       {signEmail && (
-        <div className={signEmail ? "open" : "closed"}>
-          <h2>Email Anmeldung</h2>
+        <div className={signRegistration ? "sliderTab open" : "sliderTab closed" }>
+          <h1>Email Anmeldung</h1>
           <div className="field">
+            
             <div class="row">
               <input
                 type="text"
@@ -82,10 +81,19 @@ const Login = () => {
               <SvgIcon name="edit" />
             </div>
 
-            <div className="field">
-              <button
+            <div className="field" style={{display:"flex",justifyContent:"space-between"}}>
+            <button 
                 type="submit"
-                onClick={e => submitEMail(e, "login")}
+                onClick={() => toggleEmail(!signEmail)}
+                className="btn notify">
+                         <SvgIcon name="back" />
+              </button>
+
+            <button className="btn confirm" onClick={() => toggleRegistration(!signRegistration)}>
+          Noch keinen Account?{" "}
+        </button>    <button
+                type="submit"
+                onClick={e => submitSignIn(e, "login")}
                 className="btn notify"
               >
                 Anmelden
@@ -95,8 +103,8 @@ const Login = () => {
         </div>
       )}
       {signRegistration && (
-        <div className={signRegistration ? "open" : "closed"}>
-          <h2>Neuen Account anlegen</h2>
+        <div className="sliderTab closed"> 
+          <h1>Neuen Account anlegen</h1>
           <div className="field">
             <div class="row">
               <input
@@ -139,10 +147,16 @@ const Login = () => {
               <SvgIcon name="edit" />
             </div>
 
-            <div className="field">
+            <div className="field" style={{display:"flex",justifyContent:"space-between"}}>
+            <button
+                type="submit"
+                onClick={() => toggleRegistration(!signRegistration)}
+                className="btn notify">
+                         <SvgIcon name="back" />
+              </button>
               <button
                 type="submit"
-                onClick={e => submitEMail(e, "register")}
+                onClick={e => submitSignIn(e, "register")}
                 className="btn notify"
               >
                 Account erstellen
@@ -156,12 +170,12 @@ const Login = () => {
 };
 const SignIn = props => {
   return (
-    <form>
-      <button className={`btn ${props.type}`} type="submit">
+    <div className="field">
+      <button className={`btn ${props.type} social`} type="submit">
         <SvgIcon name={props.type} /> Anmelden mit {props.type}
       </button>
-    </form>
-  );
+      </div>
+    );
 };
 
 export default Login;

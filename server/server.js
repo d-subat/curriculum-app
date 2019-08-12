@@ -100,7 +100,7 @@ passport.deserializeUser(function(id, done) {
 });
 
 const isAuthenticated = (req,res,next) => {
-  console.log(req.session)
+  console.log(req.session,req.isAuthenticated())
   if(req.isAuthenticated())
      return next();
   else
@@ -181,6 +181,7 @@ app.post('/api/update', isAuthenticated,function (request, response) {
 
 
 app.get('/api/curriculum',isAuthenticated, function (request, response) {
+  console.log("test");
   db.each('SELECT * FROM curriculum', function (err, row) {
     response.send(JSON.parse('{' +
         '"signature": ' + row.signature +

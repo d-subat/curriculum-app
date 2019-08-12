@@ -197,7 +197,7 @@ const TopicEdit = props => {
       )}
       <div className="topic">
         {isObject(Object.values(props.data[props.match.params.id])[0]) && (
-          <div className="field">
+          <div className="field controlPages"  >
             <button onClick={() => controlPages("down")} className="btn notify">
               &lt;
             </button>

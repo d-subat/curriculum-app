@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 class auth {
-    authenticated = false;
+    authenticated = true;
     login = () => {
         this.authenticated = true;
         return this.authenticated;
