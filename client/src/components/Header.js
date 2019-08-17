@@ -1,9 +1,10 @@
-import React from "react";
+import React , {useState} from "react";
 import { Link, withRouter } from "react-router-dom";
 import SvgIcon from "./SvgIcon";
  
 const Header = props => {
   
+  const [navOpen, toggleNav] =useState(false)
   const handleBackgroundColor = e => {
     //hextorgb
     const r = parseInt(e.target.value.substr(1, 2), 16) / 255;
@@ -41,7 +42,7 @@ const Header = props => {
     <>
       <header>
         <Link style={{ flex: 1 }} to="/">
-          <img src="/logo.svg" alt="curriculum vitae logo" />
+        <img src="/logo.svg" alt="curriculum vitae logo"  /> 
         </Link>
         {props.history.location.pathname !== "/" ? (
           <Link
@@ -69,20 +70,34 @@ const Header = props => {
             Curriculum Vitae{" "}
           </div>
         )}
-        <div
-          className="navMenu"
+        <button onClick={() => toggleNav(!navOpen)} className="btn navMenuToggle"
           style={{
             textAlign: "right",
-            flex: 1,
+            
             display: "flex",
             justifyContent: "flex-end"
           }}
         >
-          <label
+ 
+            <SvgIcon name="settings" /> 
+     
+          </button>
+      </header>
+      <div className={navOpen?  "navMenu isOpen" : "navMenu"}>
+      <button onClick={() => toggleNav(!navOpen)} className="btn navMenuToggle open">
+      <SvgIcon name="close" />
+      </button>
+      <a href="http://localhost:4000/logout" onClick={() => toggleNav(!navOpen)}
+            style={{ padding: "1em 0 1em 1em", borderLeft: "1px solid white" }}
+            className="navMenuItem"
+          >
+            <SvgIcon name="user" /> User Settings
+          </a>
+          <label className="navMenuItem"
             style={{ padding: "1em", borderLeft: "1px solid white" }}
             htmlFor="colorChooser"
           >
-            <SvgIcon name="settings" />
+            <SvgIcon name="color" />Hintergrund
             <input
               onChange={handleBackgroundColor}
               type="color"
@@ -91,15 +106,14 @@ const Header = props => {
               value="#e66465"
             />
           </label>
-
-          <div
-            onClick=""
+          <a href="http://localhost:4000/logout" onClick={() => toggleNav(!navOpen)}
             style={{ padding: "1em 0 1em 1em", borderLeft: "1px solid white" }}
+            className="navMenuItem"
           >
-            <SvgIcon name="user" />
-          </div>
-        </div>
-      </header>
+          <SvgIcon name="logout" />             Logout
+          </a>
+      
+      </div>
     </>
   );
 };

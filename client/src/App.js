@@ -7,11 +7,14 @@ import Loading from "./components/Loading";
 
 import Header from "./components/Header";
 import Home from ".//components/Home";
+import Profile from ".//components/Profile";
+
 import TopicEdit from ".//components/TopicEdit";
 import Signature from "./components/Signature";
 import NotFound from "./components/NotFound";
 
 import PDFGenerator from "./components/PDFGenerator";
+import WEBGenerator from "./components/WEBGenerator";
 import axios from "axios";
 
 import "./App.scss";
@@ -25,6 +28,7 @@ function App(props) {
   const [profileImage, setProfileImage] = useState([]);
   const [updateStatus, setUpdate] = useState(false);
   const [isAuth,setAuth]  = useState(props.isAuth);
+  
 
 
   useEffect(() => {
@@ -71,24 +75,26 @@ function App(props) {
   return (
     
     <Router>
-    {isAuth?
+      {console.log( "within app:" + props.isAuth + "//" +props.authenticated)}
+    {!!props.isAuth  ?    
+    
     <>
       <Header  profileName={Object.keys(serverData).length > 0 ? `${serverData["Persönliche Daten"].name}` : ""} />
       <main>
         <Switch>
-          <Route  path="/" exact={true} render={() => <Home  data={serverData} signature={signatureImage}  saveProfileImage={saveProfileImage}   profileImg={profileImage} /> } />  
-          <Route  path="/signature" render={() => <Signature updateStatus={updateStatus} setUpdate={setUpdate} signature={signatureImage} /> } />  
-          <Route  path="/pdfgenerator" render={() => <PDFGenerator signature={signatureImage}  profileImg={profileImage} data={serverData} /> } />  
-          
-          <Route path="/login" exact={true}  render={() =>   <Login />} />      
-          <Route  path="/CV/:id"   render={({match}) => <TopicEdit  updateStatus={updateStatus} setUpdate={setUpdate} match={match} data={serverData} /> } />            
+        <Route  path="/" exact={true} render={() => <Home  data={serverData} signature={signatureImage}  saveProfileImage={saveProfileImage}   profileImg={profileImage} /> } />  
+          <Route  path="/profil" exact={true} render={() => <Profile data={serverData} signature={signatureImage}  saveProfileImage={saveProfileImage}   profileImg={profileImage} /> } />  
+          <Route  path="/profil/unterschrift" render={() => <Signature updateStatus={updateStatus} setUpdate={setUpdate} signature={signatureImage} /> } />  
+          <Route  path="/pdfview" render={() => <PDFGenerator signature={signatureImage}  profileImg={profileImage} data={serverData} /> } />            
+          <Route  path="/webview" render={() => <WEBGenerator signature={signatureImage}  profileImg={profileImage} data={serverData} /> } />            
+          <Route  path="/profil/:id"   render={({match}) => <TopicEdit  updateStatus={updateStatus} setUpdate={setUpdate} match={match} data={serverData} /> } />            
           
           <Route  component={NotFound}/>
         </Switch>
         
       </main>
-     </> :
-      <Route path="/" exact={true}  render={() =>   <Login />} />      
+     </> 
+     :  <Route path="/"  render={({history}) =>   <Login history={history} />} />      
     }
     </Router>
   );

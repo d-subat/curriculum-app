@@ -17,16 +17,48 @@ const TopicEdit = props => {
   };
 
   const updateData = () => {
+  /*
     async function fetchData() {
       const result = await axios.post("http://localhost:4000/api/update", {
+      
+        withCredentials: true,
+    
         data: JSON.stringify(data[props.match.params.id]),
         column: props.match.params.id
       });
       props.setUpdate(!props.updateStatus);
       toggleStatus(true);
       setPostData(result.data);
+      console.log("jiha");
     }
     fetchData();
+*/
+    console.log("trying")
+    fetch("http://localhost:4000/api/update", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true
+        },
+        body: JSON.stringify({data: data[props.match.params.id],
+        column: props.match.params.id})
+      })
+        .then(response => {
+          
+          if (response.status === 200) return response.json();
+          //throw new Error("failed to authenticate user");
+        })
+        .then(data => {
+        
+            console.log("fetch:"+   data)
+  
+        })
+        .catch(error => {
+          console.log(error)
+        });
+        
   };
 
   const handleChange = e => {

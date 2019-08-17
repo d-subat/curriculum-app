@@ -1,7 +1,6 @@
-
 $custom-easing: cubic-bezier(1, .1, 0, 0.9);
 $primary: 210;
-$primaryHover: darken(hsl(210, 100%, 56%),10%);
+$primaryHover: darken(hsl(210, 100%, 56%), 10%);
 
 :root {
   --primaryColor: #{$primary};
@@ -9,18 +8,22 @@ $primaryHover: darken(hsl(210, 100%, 56%),10%);
   --primaryLight: 56%;
   --secondaryColor: 278;
   --tertiaryCOlor: 334;
-  --primary: hsl( var(--primaryColor) ,var(--primarySat) ,var(--primaryLight) );
+  --primary: hsl(var(--primaryColor), var(--primarySat), var(--primaryLight));
   --profilePlaceHolder: url(/user.png) no-repeat center;
 }
+
+$btnNames: ('notify','confirm','danger','Google','Facebook','Mail');
+$btnColors: (var(--primary),#5cb85c,orange,#cb3f22,#3b5998,#999);
+$btnColorsHover: (hsl(var(--primaryColor), 50%, 50%),#428542,rgb(180, 118, 1),#a5331c,#293e69,#666);
+
  
-$btnNames: 'notify' ,'confirm','danger' ,'Google' ,'Facebook','Mail';
-$btnColors:  var(--primary) ,#5cb85c,orange,#cb3f22,#3b5998,#999;
-$btnColorsHover: hsl( var(--primaryColor) , 50%, 50% ),#428542,rgb(180, 118, 1), #a5331c,#293e69,#666;
-
-
 body {
+ 
+  min-height:100vh;
+  background: linear-gradient(135deg, var(--primary) 0%, white 50%, var(--primary) 100%) no-repeat center center fixed; ;
+  background-size: cover; 
   font-size: 16px;
-  margin: 0;
+  margin: 0; 
 }
 
 .btn {
@@ -33,21 +36,70 @@ body {
   padding: .5em 1em;
   text-decoration: none;
   cursor: pointer;
-  
+
   display: flex;
   align-items: center;
 }
 
 @each $btn in $btnNames {
   .btn.#{$btn} {
-    background: nth( $btnColors, index($btnNames, $btn) );
-    box-shadow: inset 0 0 0 2px   nth( $btnColors, index($btnNames, $btn) ), inset 0 0 0 6px white; 
+    background: nth($btnColors, index($btnNames, $btn));
+    box-shadow: inset 0 0 0 2px nth($btnColors, index($btnNames, $btn)), inset 0 0 0 6px white;
   }
+
   .btn.#{$btn}:hover {
-    background: nth( $btnColorsHover, index($btnNames, $btn) )  ;  
-    box-shadow: inset 0 0 0 2px   nth( $btnColorsHover, index($btnNames, $btn) ), inset 0 0 0 6px white; 
+    background: nth($btnColorsHover, index($btnNames, $btn));
+    box-shadow: inset 0 0 0 2px nth($btnColorsHover, index($btnNames, $btn)), inset 0 0 0 6px white;
   }
 }
+.btn.navMenuToggle {
+   padding: 1em 0 1em 1em;
+   border-left: 1px solid white;
+   background:none;
+   margin:0;
+}
+.btn.navMenuToggle svg {  
+  margin:0;
+}
+.btn.navMenuToggle.open {
+  margin: 1.25em 1em  1em auto;
+ 
+  padding:0;
+  fill:dodgerblue;
+}
+.navMenu {
+  position:fixed;
+  right:-14em;
+  top:0;
+  width:14em;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+    
+    background: white;
+    border-left: 1px solid dodgerblue;
+    transform: translate3d(14em, 0, 0);
+  transition: all .3s ease-in-out 0s;
+  z-index:100;
+  cursor: pointer;
+}
+.navMenu.isOpen {
+  
+  transform: translate3d(0, 0, 0);
+  
+  right:0;
+}
+.navMenu button, .navMenu svg {
+  color:black;
+  fill:black;
+}
+.navMenuItem {
+
+}
+.navMenuItem:hover {
+  background:#d3d3d3;
+}
+
 
 .icon-svg {
   width: 1.5em;
@@ -59,20 +111,43 @@ body {
   margin-right: 0.5em;
 }
 
-#root {
-  height: 100%;
+ iframe {
+  height: calc(100vh - 4em);
+ }
+.login img,header img {
+  box-shadow: 1px 1px 5px 0 rgb(150, 150, 150),inset 0 0 0 2px white,inset 0 0 25px 15px dodgerblue;
+  border:2px solid white;
+  background:rgb(156, 169, 204);
+  border-radius: 50%;
+  margin-right: 0.5em;
+ 
 }
-
+#root h3 {
+  display: flex;
+  align-Items: center;
+  color: #46a4ff;
+  text-shadow: 0 0 2px #9fc8f0;
+  font-variant: small-caps;  
+  
+  font-size:2em;
+  position: relative;
+}
+#root h3 span{
+  font-size:0.5em;
+  
+}
 main {
+  background:white;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 4em);
+  /*height: calc(100vh - 4em);*/
 }
 
 header {
   background: var(--primary);
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 0 1em 0 1em
 }
 
@@ -94,6 +169,7 @@ header a {
   flex-direction: column;
   justify-content: space-between;
   position: relative;
+  text-decoration: none;
 }
 
 .profile>img {
@@ -104,7 +180,7 @@ header a {
   left: 50%;
   width: 100%;
   height: 15em;
-  z-index: -1;
+  
 }
 
 .profile label {
@@ -114,7 +190,7 @@ header a {
   background: white;
   display: grid;
   place-content: center;
-
+  z-index: 2;
 }
 
 .profile .icon-svg {
@@ -137,6 +213,22 @@ header a {
 
   text-shadow: 0 0 2px black;
   align-self: center;
+  justify-self: center;
+  font-weight: 800;
+  font-size: 3em;
+  letter-spacing: 1px;
+  width: 100%;
+  text-align: Center;
+
+}
+.profile .profileName.new {
+  color: white;
+  height:100%;
+  mix-blend-mode: hard-light;
+  background:dodgerblue;
+  text-shadow: 0 0 2px black;
+  align-self: center;
+  justify-self: center;
   font-weight: 800;
   font-size: 3em;
   letter-spacing: 1px;
@@ -174,47 +266,86 @@ header a {
   }
 }
 
-.navMenu,
-.navMenu label {
-  color: white;
-  cursor: pointer;
+
+.btn.Mail.social {
+  width: 100%;
 }
 
-
-
-.sliderTab.open{
-  animation: slideLeft 1s forwards;
+.sliderTab.open {
+  animation: slideLeft 1.25s ease forwards;
+ 
 }
 
-.sliderTab.closed{
+.sliderTab.closed {
   animation: fadeIn 0.5s forwards;
+ 
+}
+
+.login > div >div {
+  transform: translate3d(5px, 0, 0);
 }
 .sliderTab {
-  flex:1;
-  opacity: 0;
+  flex: 1;
+  
+  transition:all 1s ;
 }
+
 @keyframes fadeIn {
-  20% {    opacity: 0;  }
-  to  {    opacity: 1;  }
+  20% {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 
 }
+
 @keyframes slideLeft {
+  
   20% {
     opacity: 1;
-    transform: translate3d(20px, 0, 0);
+    transform: translate3d(5px, 0, 0);
+   
   }
   to {
     opacity: 0;
     transform: translate3d(-2000px, 0, 0);
-    position:absolute;
+    position: absolute;
+    
   }
 }
 
+.login {
+  width:100%;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
 .topic {
   display: flex;
   flex-direction: column;
   margin: 2em;
+ 
+}
+
+.topic.login {
+
+  overflow: hidden;
+  background: rgba(250,250,250,0.25);
+  border: 2px solid white;
+  position: relative;
+  padding: 2em;
+  box-shadow: 10px 10px 20px 0px rgba(0,0,0,0.5);
+  min-height:24em;
+  min-width:25em;
+  max-width:25em;
+}
+.topic.login .field {
+  width:25em;
 }
 
 summary {
@@ -291,7 +422,7 @@ details[open] summary {
 
 details .field .Company,
 details .field .Title,
-,
+
 details .field .Name {
   font-weight: bold;
   ;
@@ -373,29 +504,32 @@ details>a.btn {
   padding: 0.5em;
 }
 
-.controlPages  {
-display:flex
+.controlPages {
+  display: flex
 }
+
 .controlPages .btn {
   margin-right: 0.5em;
 }
 
 .fieldrow {
-  min-height:15em;
+  min-height: 15em;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
 }
-.sliderTab button.social {
-  margin-bottom:2em;
-  width:100%;
+
+.sliderTab .btn.social {
+  margin-bottom: 2em;
+
+  padding: .5em 1em;
 }
 
 .row {
   margin-bottom: 25px;
   display: flex;
   align-items: center;
-  
+
   overflow: hidden;
   box-shadow: inset 0 0 0 2px var(--primary);
   background: #f7f7f7;
@@ -541,8 +675,31 @@ implement mobile turn
 
 @media screen and (orientation:landscape) {}
 
-@media screen and (max-width:28em) {
+@media screen and (max-width:35em) {
+ #root img {
+  
+ }
+ #root h3 {flex-direction: column;}
   .topic .field>div {
     margin-bottom: 1em;
+  }
+  .sliderTab {
+    display: flex;
+
+flex-direction: column;
+
+align-items: center;
+  }
+  .topic {
+    margin:5px;    
+    min-width:calc(100vw - 2em);
+  max-width:100vw;
+  }
+  .topic.login {
+    padding:2px;
+    
+  }
+  .topic.login .field {
+  width:100%;    
   }
 }
